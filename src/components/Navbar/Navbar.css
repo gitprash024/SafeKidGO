@@ -1,0 +1,157 @@
+@import url('https://googleapis.com');
+
+:root {
+  --primary-color: #0052cc;
+  --primary-hover: #0043a4;
+  --text-dark: #172b4d;
+  --text-muted: #5e6c84;
+  --border-color: #dfe1e6;
+  --bg-blur: rgba(255, 255, 255, 0.9);
+}
+
+/* Base resets specifically targeted for layout safety */
+.navbar *, .navbar::before, .navbar::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* ==========================================================================
+   Main Header Wrapper (Sticky Navigation)
+   ========================================================================== */
+.navbar {
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 80px;
+  background-color: var(--bg-blur);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 40px;
+  border-bottom: 1px solid rgba(9, 30, 66, 0.08);
+  z-index: 1000;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+}
+
+/* ==========================================================================
+   Left Side: Brand Identity Logo Group
+   ========================================================================== */
+.navbar-logo-section {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+}
+
+.navbar-logo {
+  width: 38px;
+  height: auto;
+}
+
+.navbar-brand h2 {
+  font-size: 1.25rem;
+  color: #091e42;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.navbar-brand p {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  letter-spacing: 0.3px;
+  font-weight: 500;
+}
+
+/* ==========================================================================
+   Center Side: Nav Links Anchor Links
+   ========================================================================== */
+.navbar-links {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+
+.navbar-links a {
+  text-decoration: none;
+  font-size: 0.92rem;
+  font-weight: 500;
+  color: var(--text-dark);
+  position: relative;
+  padding: 8px 0;
+  transition: color 0.2s ease;
+}
+
+.navbar-links a:hover {
+  color: var(--primary-color);
+}
+
+/* Interactive sliding under-line decoration */
+.navbar-links a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: #36b37e; /* Matches signature identity green color */
+  transition: width 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.navbar-links a:hover::after {
+  width: 100%;
+}
+
+/* ==========================================================================
+   Right Side: Action Link Button Route
+   ========================================================================== */
+.navbar-login-btn {
+  text-decoration: none;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: #ffffff;
+  background-color: var(--primary-color);
+  padding: 10px 26px;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(0, 82, 204, 0.15);
+}
+
+.navbar-login-btn:hover {
+  background-color: var(--primary-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(0, 82, 204, 0.25);
+}
+
+.navbar-login-btn:active {
+  transform: translateY(0);
+}
+
+/* ==========================================================================
+   Responsive Adaptations Breakpoints
+   ========================================================================== */
+@media (max-width: 1024px) {
+  .navbar {
+    padding: 0 24px;
+    height: 70px;
+  }
+  
+  .navbar-links {
+    gap: 16px;
+  }
+  
+  .navbar-links a {
+    font-size: 0.88rem;
+  }
+}
+
+/* Fallback hiding approach to cleanly handle raw elements on viewports without mobile drawer state scripts built yet */
+@media (max-width: 860px) {
+  .navbar-links {
+    display: none; 
+  }
+}

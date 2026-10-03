@@ -1,0 +1,151 @@
+@import url('https://googleapis.com');
+
+:root {
+  --primary-color: #0052cc;
+  --text-dark: #172b4d;
+  --text-muted: #5e6c84;
+  --bg-light: #f4f5f7;
+  --border-color: #dfe1e6;
+  --green-accent: #36b37e;
+}
+
+/* Section Wrapper Constraints */
+.features {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 100px 40px;
+  text-align: center;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+  background-color: #ffffff;
+}
+
+/* Small Upper Content Tag */
+.feature-tag {
+  display: inline-block;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  letter-spacing: 1.5px;
+  background-color: rgba(0, 82, 204, 0.06);
+  padding: 6px 16px;
+  border-radius: 20px;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+}
+
+/* Master Core Section Typography */
+.features h2 {
+  font-size: 2.5rem;
+  color: var(--text-dark);
+  font-weight: 700;
+  line-height: 1.3;
+  margin-bottom: 60px;
+}
+
+/* Fluid Auto-Fitting Responsive Grid */
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+  width: 100%;
+}
+
+/* Clean Dynamic Cards Styling */
+.feature-card {
+  background: #ffffff;
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  padding: 32px 24px;
+  text-align: left;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  box-shadow: 0 4px 12px rgba(9, 30, 66, 0.03);
+}
+
+/* Smooth Card Lifting Hover States */
+.feature-card:hover {
+  transform: translateY(-6px);
+  border-color: transparent;
+  box-shadow: 0 12px 30px rgba(9, 30, 66, 0.08);
+}
+
+/* Circular Feature Icon Placement */
+.feature-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 12px;
+  background-color: rgba(0, 82, 204, 0.08);
+  color: var(--primary-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  margin-bottom: 24px;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+}
+
+/* Subtle Icon Transformation on Parent Card Hover */
+.feature-card:hover .feature-icon {
+  background-color: var(--primary-color);
+  color: #ffffff;
+}
+
+/* Dynamic Card Heading Accent color rules */
+.feature-card h3 {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--text-dark);
+  margin-bottom: 12px;
+  transition: color 0.2s ease;
+}
+
+.feature-card:hover h3 {
+  color: var(--primary-color);
+}
+
+/* Description Text Typography */
+.feature-card p {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+/* ==========================================================================
+   RESPONSIVE DESIGN BREAKPOINTS
+   ========================================================================== */
+
+@media (max-width: 1024px) {
+  .features {
+    padding: 80px 24px;
+  }
+
+  .features h2 {
+    font-size: 2.1rem;
+    margin-bottom: 45px;
+  }
+}
+
+@media (max-width: 640px) {
+  .features {
+    padding: 60px 16px;
+  }
+
+  .features h2 {
+    font-size: 1.8rem;
+    line-height: 1.2;
+  }
+
+  .feature-grid {
+    grid-template-columns: 1fr; /* Stack into a single clean column on narrow viewports */
+    gap: 20px;
+  }
+
+  .feature-card {
+    padding: 24px;
+  }
+}
