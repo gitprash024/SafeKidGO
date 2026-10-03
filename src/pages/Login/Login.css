@@ -1,218 +1,785 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../lib/firebase";
-import "./Login.css";
+* {
+  box-sizing: border-box;
+}
 
-const Login: React.FC = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
-  const [rememberMe, setRememberMe] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
+.login-page {
+  min-height: 100vh;
+  width: 100%;
+  font-family:
+    Inter,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError(null);
+  background: #f5f9ff;
+  color: #172033;
+}
 
-    if (!email || !password) {
-      setError("Please enter both email and password.");
-      return;
-    }
+.login-container {
+  min-height: 100vh;
+  display: flex;
+}
 
-    setLoading(true);
-    try {
-      await signInWithEmailAndPassword(auth, email, password);
-      // TODO: jab har user ka role (admin/driver/parent) Firestore mein store
-      // hone lagega, yahan check karke sahi dashboard par bhejna.
-      navigate("/dashboard");
-    } catch (err: any) {
-      setError(friendlyError(err?.code));
-    } finally {
-      setLoading(false);
-    }
-  };
+/* =========================
+   LEFT SECTION
+========================= */
 
-  return (
-    <div className="login-page">
-      <div className="login-container">
+.login-left {
+  width: 52%;
+  min-height: 100vh;
 
-        {/* Left Section */}
-        <div className="login-left">
-          <div className="brand">
-            <div className="brand-icon">🛡️</div>
-            <span>SafeKidGo</span>
-          </div>
+  padding: 55px 8%;
 
-          <div className="left-content">
-            <h1>
-              Safety starts with
-              <span> staying connected.</span>
-            </h1>
-
-            <p>
-              Keep your children safe and stay connected with real-time
-              school bus tracking, alerts and secure communication.
-            </p>
-
-            <div className="safety-features">
-              <div className="feature-item">
-                <div className="feature-icon">📍</div>
-                <div>
-                  <h3>Live Tracking</h3>
-                  <p>Know where your child's bus is in real time.</p>
-                </div>
-              </div>
-
-              <div className="feature-item">
-                <div className="feature-icon">🔔</div>
-                <div>
-                  <h3>Instant Alerts</h3>
-                  <p>Get important notifications instantly.</p>
-                </div>
-              </div>
-
-              <div className="feature-item">
-                <div className="feature-icon">🔒</div>
-                <div>
-                  <h3>Secure & Private</h3>
-                  <p>Your child's information stays protected.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Right Section */}
-        <div className="login-right">
-          <div className="login-card">
-
-            <div className="mobile-brand">
-              <div className="brand-icon">🛡️</div>
-              <span>SafeKidGo</span>
-            </div>
-
-            <div className="login-header">
-              <h2>Welcome Back!</h2>
-              <p>Login to your SafeKidGo account</p>
-            </div>
-
-            {error && <div className="login-error">{error}</div>}
-
-            <form onSubmit={handleSubmit}>
-
-              {/* Email */}
-              <div className="form-group">
-                <label htmlFor="email">Email Address</label>
-
-                <div className="input-wrapper">
-                  <span className="input-icon">✉️</span>
-
-                  <input
-                    id="email"
-                    type="email"
-                    placeholder="Enter your email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    autoComplete="email"
-                    disabled={loading}
-                  />
-                </div>
-              </div>
-
-              {/* Password */}
-              <div className="form-group">
-                <div className="password-label">
-                  <label htmlFor="password">Password</label>
-
-                  <a href="/forgot-password">
-                    Forgot Password?
-                  </a>
-                </div>
-
-                <div className="input-wrapper">
-                  <span className="input-icon">🔒</span>
-
-                  <input
-                    id="password"
-                    type={showPassword ? "text" : "password"}
-                    placeholder="Enter your password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    autoComplete="current-password"
-                    disabled={loading}
-                  />
-
-                  <button
-                    type="button"
-                    className="show-password"
-                    onClick={() => setShowPassword(!showPassword)}
-                    aria-label="Show password"
-                  >
-                    {showPassword ? "🙈" : "👁️"}
-                  </button>
-                </div>
-              </div>
-
-              {/* Remember */}
-              <div className="login-options">
-                <label className="remember">
-                  <input
-                    type="checkbox"
-                    checked={rememberMe}
-                    onChange={(e) => setRememberMe(e.target.checked)}
-                  />
-                  <span>Remember me</span>
-                </label>
-              </div>
-
-              {/* Login Button */}
-              <button type="submit" className="login-button" disabled={loading}>
-                {loading ? "Logging in…" : "Login"}
-                {!loading && <span>→</span>}
-              </button>
-
-            </form>
-
-            <div className="divider">
-              <span>OR</span>
-            </div>
-
-            <div className="signup-text">
-              Don't have an account?
-              <a href="/register"> Create Account</a>
-            </div>
-
-            <div className="login-footer">
-              <span>🛡️</span>
-              Safe & Secure • SafeKidGo
-            </div>
-
-          </div>
-        </div>
-
-      </div>
-    </div>
+  background: linear-gradient(
+    145deg,
+    #0878f9 0%,
+    #0756c9 100%
   );
-};
 
-function friendlyError(code?: string): string {
-  switch (code) {
-    case "auth/invalid-credential":
-    case "auth/wrong-password":
-    case "auth/user-not-found":
-      return "Email ya password galat hai.";
-    case "auth/invalid-email":
-      return "Ye email address sahi nahi lag raha.";
-    case "auth/too-many-requests":
-      return "Bohot zyada try ho gaye, thodi der baad try karo.";
-    case "auth/network-request-failed":
-      return "Internet connection check karo aur dubara try karo.";
-    default:
-      return "Kuch galat ho gaya. Firebase setup (.env) check karke dubara try karo.";
+  color: white;
+
+  position: relative;
+  overflow: hidden;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.login-left::before {
+  content: "";
+
+  position: absolute;
+
+  width: 450px;
+  height: 450px;
+
+  border-radius: 50%;
+
+  background: rgba(255, 255, 255, 0.06);
+
+  top: -180px;
+  right: -150px;
+}
+
+.login-left::after {
+  content: "";
+
+  position: absolute;
+
+  width: 350px;
+  height: 350px;
+
+  border-radius: 50%;
+
+  background: rgba(255, 255, 255, 0.05);
+
+  bottom: -150px;
+  left: -150px;
+}
+
+/* =========================
+   BRAND
+========================= */
+
+.brand {
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+
+  font-size: 28px;
+  font-weight: 800;
+
+  position: relative;
+  z-index: 2;
+}
+
+.brand-icon {
+  width: 48px;
+  height: 48px;
+
+  border-radius: 14px;
+
+  background: white;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 25px;
+
+  box-shadow:
+    0 8px 25px rgba(0, 0, 0, 0.12);
+}
+
+/* =========================
+   LEFT CONTENT
+========================= */
+
+.left-content {
+  max-width: 560px;
+
+  margin: auto 0;
+
+  position: relative;
+  z-index: 2;
+}
+
+.left-content h1 {
+  font-size: clamp(40px, 4vw, 62px);
+
+  line-height: 1.08;
+
+  margin: 0 0 25px;
+
+  font-weight: 800;
+
+  letter-spacing: -1.5px;
+}
+
+.left-content h1 span {
+  color: #aee0ff;
+
+  display: block;
+}
+
+.left-content > p {
+  font-size: 18px;
+
+  line-height: 1.7;
+
+  color: rgba(255, 255, 255, 0.88);
+
+  margin-bottom: 45px;
+
+  max-width: 520px;
+}
+
+/* =========================
+   FEATURES
+========================= */
+
+.safety-features {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 22px;
+}
+
+.feature-item {
+  display: flex;
+
+  align-items: center;
+
+  gap: 16px;
+}
+
+.feature-icon {
+  min-width: 52px;
+
+  width: 52px;
+  height: 52px;
+
+  border-radius: 15px;
+
+  background: rgba(255, 255, 255, 0.14);
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  font-size: 22px;
+
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.feature-item h3 {
+  margin: 0 0 4px;
+
+  font-size: 16px;
+}
+
+.feature-item p {
+  margin: 0;
+
+  color: rgba(255, 255, 255, 0.72);
+
+  font-size: 14px;
+}
+
+/* =========================
+   RIGHT SECTION
+========================= */
+
+.login-right {
+  width: 48%;
+
+  min-height: 100vh;
+
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+
+  padding: 40px;
+
+  background: #f7faff;
+}
+
+.login-card {
+  width: 100%;
+
+  max-width: 460px;
+
+  background: white;
+
+  padding: 45px;
+
+  border-radius: 24px;
+
+  box-shadow:
+    0 20px 60px rgba(20, 67, 120, 0.08),
+    0 4px 15px rgba(20, 67, 120, 0.04);
+
+  border: 1px solid #e8eef7;
+}
+
+/* =========================
+   MOBILE BRAND
+========================= */
+
+.mobile-brand {
+  display: none;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.login-header {
+  margin-bottom: 32px;
+}
+
+.login-header h2 {
+  font-size: 32px;
+
+  margin: 0 0 8px;
+
+  color: #172033;
+
+  font-weight: 800;
+}
+
+.login-header p {
+  margin: 0;
+
+  color: #78849a;
+
+  font-size: 15px;
+}
+
+/* =========================
+   ERROR
+========================= */
+
+.login-error {
+  background: #fdecea;
+
+  color: #c0392b;
+
+  border: 1px solid #f5c6c0;
+
+  padding: 12px 16px;
+
+  border-radius: 10px;
+
+  font-size: 13.5px;
+
+  font-weight: 500;
+
+  margin-bottom: 20px;
+
+  line-height: 1.5;
+}
+
+/* =========================
+   FORM
+========================= */
+
+.form-group {
+  margin-bottom: 22px;
+}
+
+.form-group label {
+  display: block;
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  color: #344054;
+
+  margin-bottom: 9px;
+}
+
+/* =========================
+   PASSWORD LABEL
+========================= */
+
+.password-label {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+}
+
+.password-label a {
+  font-size: 13px;
+
+  color: #0878f9;
+
+  text-decoration: none;
+
+  font-weight: 600;
+}
+
+.password-label a:hover {
+  text-decoration: underline;
+}
+
+/* =========================
+   INPUT
+========================= */
+
+.input-wrapper {
+  width: 100%;
+
+  height: 54px;
+
+  display: flex;
+
+  align-items: center;
+
+  border: 1px solid #dce3ed;
+
+  border-radius: 12px;
+
+  background: #fff;
+
+  transition: all 0.2s ease;
+
+  overflow: hidden;
+}
+
+.input-wrapper:focus-within {
+  border-color: #0878f9;
+
+  box-shadow:
+    0 0 0 4px rgba(8, 120, 249, 0.1);
+}
+
+.input-icon {
+  width: 50px;
+
+  min-width: 50px;
+
+  text-align: center;
+
+  font-size: 17px;
+
+  opacity: 0.75;
+}
+
+.input-wrapper input {
+  height: 100%;
+
+  flex: 1;
+
+  border: none;
+
+  outline: none;
+
+  background: transparent;
+
+  font-size: 15px;
+
+  color: #172033;
+
+  padding: 0 10px 0 0;
+
+  min-width: 0;
+}
+
+.input-wrapper input::placeholder {
+  color: #a1a9b8;
+}
+
+.input-wrapper input:disabled {
+  background: #f7faff;
+
+  color: #a1a9b8;
+
+  cursor: not-allowed;
+}
+
+/* =========================
+   SHOW PASSWORD
+========================= */
+
+.show-password {
+  width: 48px;
+
+  height: 100%;
+
+  border: none;
+
+  background: transparent;
+
+  cursor: pointer;
+
+  font-size: 17px;
+
+  opacity: 0.7;
+}
+
+.show-password:hover {
+  opacity: 1;
+}
+
+.show-password:disabled {
+  cursor: not-allowed;
+
+  opacity: 0.4;
+}
+
+/* =========================
+   OPTIONS
+========================= */
+
+.login-options {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  margin: 5px 0 25px;
+}
+
+.remember {
+  display: flex;
+
+  align-items: center;
+
+  gap: 9px;
+
+  cursor: pointer;
+
+  color: #667085;
+
+  font-size: 14px;
+}
+
+.remember input {
+  width: 17px;
+
+  height: 17px;
+
+  accent-color: #0878f9;
+
+  cursor: pointer;
+}
+
+.remember input:disabled {
+  cursor: not-allowed;
+}
+
+/* =========================
+   LOGIN BUTTON
+========================= */
+
+.login-button {
+  width: 100%;
+
+  height: 54px;
+
+  border: none;
+
+  border-radius: 12px;
+
+  background: #0878f9;
+
+  color: white;
+
+  font-size: 16px;
+
+  font-weight: 700;
+
+  cursor: pointer;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 12px;
+
+  transition: all 0.2s ease;
+}
+
+.login-button:hover:not(:disabled) {
+  background: #0668dc;
+
+  transform: translateY(-1px);
+
+  box-shadow:
+    0 8px 20px rgba(8, 120, 249, 0.25);
+}
+
+.login-button:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.login-button:disabled {
+  background: #78b3fb;
+
+  cursor: not-allowed;
+
+  transform: none;
+
+  box-shadow: none;
+}
+
+.login-button > span:last-child {
+  font-size: 20px;
+}
+
+/* =========================
+   LOADING SPINNER
+========================= */
+
+.spinner {
+  width: 18px;
+
+  height: 18px;
+
+  border: 2px solid rgba(255, 255, 255, 0.4);
+
+  border-top-color: white;
+
+  border-radius: 50%;
+
+  animation: login-spin 0.7s linear infinite;
+}
+
+@keyframes login-spin {
+  to {
+    transform: rotate(360deg);
   }
 }
 
-export default Login;
+/* =========================
+   DIVIDER
+========================= */
+
+.divider {
+  display: flex;
+
+  align-items: center;
+
+  gap: 15px;
+
+  margin: 28px 0;
+
+  color: #a0a8b6;
+
+  font-size: 12px;
+
+  font-weight: 600;
+}
+
+.divider::before,
+.divider::after {
+  content: "";
+
+  height: 1px;
+
+  flex: 1;
+
+  background: #e6eaf0;
+}
+
+/* =========================
+   SIGNUP
+========================= */
+
+.signup-text {
+  text-align: center;
+
+  font-size: 14px;
+
+  color: #667085;
+}
+
+.signup-text a {
+  color: #0878f9;
+
+  text-decoration: none;
+
+  font-weight: 700;
+}
+
+.signup-text a:hover {
+  text-decoration: underline;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+.login-footer {
+  margin-top: 28px;
+
+  padding-top: 20px;
+
+  border-top: 1px solid #edf0f4;
+
+  text-align: center;
+
+  color: #98a2b3;
+
+  font-size: 12px;
+}
+
+.login-footer span {
+  margin-right: 5px;
+}
+
+/* =========================
+   TABLET
+========================= */
+
+@media (max-width: 1000px) {
+  .login-left {
+    width: 45%;
+
+    padding: 45px;
+  }
+
+  .login-right {
+    width: 55%;
+
+    padding: 30px;
+  }
+
+  .login-card {
+    padding: 35px;
+  }
+
+  .left-content h1 {
+    font-size: 42px;
+  }
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 768px) {
+  .login-container {
+    display: block;
+  }
+
+  .login-left {
+    display: none;
+  }
+
+  .login-right {
+    width: 100%;
+
+    min-height: 100vh;
+
+    padding: 25px 18px;
+
+    align-items: center;
+  }
+
+  .login-card {
+    max-width: 500px;
+
+    padding: 32px 24px;
+
+    border-radius: 20px;
+
+    box-shadow: none;
+
+    border: none;
+  }
+
+  .mobile-brand {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 10px;
+
+    color: #0878f9;
+
+    font-size: 25px;
+
+    font-weight: 800;
+
+    margin-bottom: 35px;
+  }
+
+  .mobile-brand .brand-icon {
+    width: 44px;
+
+    height: 44px;
+
+    background: #eaf4ff;
+
+    box-shadow: none;
+  }
+
+  .login-header {
+    text-align: center;
+  }
+
+  .login-header h2 {
+    font-size: 28px;
+  }
+}
+
+/* =========================
+   SMALL MOBILE
+========================= */
+
+@media (max-width: 400px) {
+  .login-right {
+    padding: 15px;
+  }
+
+  .login-card {
+    padding: 25px 18px;
+  }
+
+  .login-header h2 {
+    font-size: 25px;
+  }
+
+  .input-wrapper {
+    height: 50px;
+  }
+
+  .login-button {
+    height: 50px;
+  }
+}
