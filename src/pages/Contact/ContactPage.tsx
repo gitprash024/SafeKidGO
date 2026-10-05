@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import type { FormEvent } from "react";
 import "./ContactPage.css";
 
 const ContactPage: React.FC = () => {
@@ -9,23 +10,22 @@ const ContactPage: React.FC = () => {
     message: "",
   });
 
-  const [submitted, setSubmitted] = useState(false);
-
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    const { name, value } = e.target;
-
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    setSubmitted(true);
+    // Temporary form handling
+    console.log("Contact Form:", formData);
+
+    alert("Thank you! Your message has been submitted.");
 
     setFormData({
       name: "",
@@ -33,10 +33,6 @@ const ContactPage: React.FC = () => {
       subject: "",
       message: "",
     });
-
-    setTimeout(() => {
-      setSubmitted(false);
-    }, 5000);
   };
 
   return (
@@ -44,12 +40,10 @@ const ContactPage: React.FC = () => {
       <section className="contact-section">
         <div className="contact-container">
 
-          {/* ================= LEFT ================= */}
+          {/* LEFT SIDE */}
           <div className="contact-info">
 
-            <div className="contact-label">
-              CONTACT US
-            </div>
+            <span className="contact-label">CONTACT US</span>
 
             <h1>
               We'd Love
@@ -66,10 +60,10 @@ const ContactPage: React.FC = () => {
 
             <div className="contact-details">
 
-              {/* Email */}
+              {/* EMAIL */}
               <div className="contact-detail">
                 <div className="contact-icon email-icon">
-                  ✉
+                  <span>✉</span>
                 </div>
 
                 <div>
@@ -80,10 +74,10 @@ const ContactPage: React.FC = () => {
                 </div>
               </div>
 
-              {/* Phone */}
+              {/* PHONE */}
               <div className="contact-detail">
-                <div className="contact-icon">
-                  ☎
+                <div className="contact-icon phone-icon">
+                  <span>☎</span>
                 </div>
 
                 <div>
@@ -94,18 +88,18 @@ const ContactPage: React.FC = () => {
                 </div>
               </div>
 
-              {/* Office */}
+              {/* OFFICE */}
               <div className="contact-detail">
-                <div className="contact-icon">
-                  📍
+                <div className="contact-icon location-icon">
+                  <span>●</span>
                 </div>
 
                 <div>
                   <h3>Office</h3>
                   <p>
-                    Lucknow, Uttar
+                    Lucknow, Uttar Pradesh,
                     <br />
-                    Pradesh, India
+                    India
                   </p>
                 </div>
               </div>
@@ -113,7 +107,7 @@ const ContactPage: React.FC = () => {
             </div>
           </div>
 
-          {/* ================= RIGHT ================= */}
+          {/* RIGHT SIDE */}
           <div className="contact-form-wrapper">
 
             <form
@@ -122,14 +116,12 @@ const ContactPage: React.FC = () => {
             >
 
               <div className="form-group">
-                <label htmlFor="name">
-                  Your Name
-                </label>
+                <label htmlFor="name">Your Name</label>
 
                 <input
                   id="name"
-                  name="name"
                   type="text"
+                  name="name"
                   placeholder="Your Name"
                   value={formData.name}
                   onChange={handleChange}
@@ -138,14 +130,12 @@ const ContactPage: React.FC = () => {
               </div>
 
               <div className="form-group">
-                <label htmlFor="email">
-                  Email Address
-                </label>
+                <label htmlFor="email">Email Address</label>
 
                 <input
                   id="email"
-                  name="email"
                   type="email"
+                  name="email"
                   placeholder="Email Address"
                   value={formData.email}
                   onChange={handleChange}
@@ -154,14 +144,12 @@ const ContactPage: React.FC = () => {
               </div>
 
               <div className="form-group">
-                <label htmlFor="subject">
-                  Subject
-                </label>
+                <label htmlFor="subject">Subject</label>
 
                 <input
                   id="subject"
-                  name="subject"
                   type="text"
+                  name="subject"
                   placeholder="Subject"
                   value={formData.subject}
                   onChange={handleChange}
@@ -170,9 +158,7 @@ const ContactPage: React.FC = () => {
               </div>
 
               <div className="form-group">
-                <label htmlFor="message">
-                  Message
-                </label>
+                <label htmlFor="message">Message</label>
 
                 <textarea
                   id="message"
@@ -184,12 +170,6 @@ const ContactPage: React.FC = () => {
                   required
                 />
               </div>
-
-              {submitted && (
-                <div className="success-message">
-                  Your message has been submitted successfully.
-                </div>
-              )}
 
               <button
                 type="submit"
