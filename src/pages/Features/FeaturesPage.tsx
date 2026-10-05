@@ -1,600 +1,975 @@
-import "./FeaturesPage.css";
+import React from "react";
 import { Link } from "react-router-dom";
-
 import {
   FaSchool,
   FaUsers,
   FaBus,
   FaShieldAlt,
+  FaMapMarkerAlt,
+  FaBell,
+  FaUserTie,
+  FaChartLine,
+  FaGasPump,
+  FaExclamationTriangle,
+  FaLock,
+  FaGoogle,
+  FaSatelliteDish,
+  FaSms,
+  FaCloud,
+  FaIdCard,
+  FaCreditCard,
+  FaCheckCircle,
+  FaArrowRight,
+  FaPhoneAlt,
 } from "react-icons/fa";
+
+import "./FeaturesPage.css";
 
 import dashboardImg from "../../assets/dashboard.png";
 import phoneImg from "../../assets/mobile.png";
 
-function FeaturesPage() {
+const FeaturesPage: React.FC = () => {
   return (
     <div className="features-page">
 
-      {/* ================= HERO ================= */}
-
+      {/* =====================================================
+          HERO
+      ===================================================== */}
       <section className="features-hero">
 
-        {/* LEFT */}
+        <div className="hero-content">
 
-        <div className="hero-left">
+          <div className="hero-copy">
 
-          <span className="section-tag">
-            FEATURES
-          </span>
+            <span className="hero-label">FEATURES</span>
 
-          <h1>
-            Powerful Features for
-            <br />
-            Smarter
-            <span> School Transportation</span>
-          </h1>
+            <h1>
+              Powerful Features for
+              <br />
+              Smarter{" "}
+              <span>School Transportation</span>
+            </h1>
 
-          <p>
-            Everything you need to keep students safe,
-            parents informed and schools in complete
-            control.
-          </p>
+            <p className="hero-description">
+              Everything you need to keep students safe, parents informed,
+              and schools in complete control.
+            </p>
 
-          {/* Statistics */}
+            {/* Statistics */}
+            <div className="hero-stats">
 
-          <div className="hero-stats">
+              <div className="stat-item">
+                <div className="stat-icon blue">
+                  <FaSchool />
+                </div>
+                <div>
+                  <strong>500+</strong>
+                  <span>Schools</span>
+                </div>
+              </div>
 
-            <div className="stat-box">
-              <FaSchool className="blue" />
+              <div className="stat-item">
+                <div className="stat-icon green">
+                  <FaUsers />
+                </div>
+                <div>
+                  <strong>50,000+</strong>
+                  <span>Parents</span>
+                </div>
+              </div>
 
-              <div>
-                <h3>500+</h3>
-                <span>Schools</span>
+              <div className="stat-item">
+                <div className="stat-icon orange">
+                  <FaBus />
+                </div>
+                <div>
+                  <strong>1,000+</strong>
+                  <span>Buses</span>
+                </div>
+              </div>
+
+              <div className="stat-item">
+                <div className="stat-icon purple">
+                  <FaShieldAlt />
+                </div>
+                <div>
+                  <strong>99.8%</strong>
+                  <span>Uptime</span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          {/* Hero Images */}
+          <div className="hero-visual">
+
+            <div className="dashboard-wrapper">
+              <img
+                src={dashboardImg}
+                alt="SafeKid GO Dashboard"
+                className="dashboard-image"
+              />
+            </div>
+
+            <div className="phone-wrapper">
+              <img
+                src={phoneImg}
+                alt="SafeKid GO Mobile Application"
+                className="phone-image"
+              />
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+
+
+      {/* =====================================================
+          FEATURE GRID 01 - 06
+      ===================================================== */}
+      <section className="feature-section">
+
+        <div className="feature-grid">
+
+          {/* 01 */}
+          <article className="feature-card">
+
+            <div className="feature-content">
+
+              <span className="feature-number">01</span>
+
+              <h2>
+                <FaMapMarkerAlt />
+                Live GPS Tracking
+              </h2>
+
+              <p>
+                Track school buses in real-time with accurate location,
+                ETA and route updates.
+              </p>
+
+              <div className="feature-list">
+
+                <span>
+                  <FaCheckCircle /> Live Location
+                </span>
+
+                <span>
+                  <FaCheckCircle /> Route Tracking
+                </span>
+
+                <span>
+                  <FaCheckCircle /> ETA & Traffic Updates
+                </span>
+
+                <span>
+                  <FaCheckCircle /> Geofencing
+                </span>
+
+                <span>
+                  <FaCheckCircle /> Route Replay
+                </span>
+
+                <span>
+                  <FaCheckCircle /> History & Playback
+                </span>
+
+              </div>
+
+            </div>
+
+            <div className="feature-visual">
+              <img
+                src={dashboardImg}
+                alt="Live GPS Tracking Dashboard"
+              />
+            </div>
+
+          </article>
+
+
+          {/* 02 */}
+          <article className="feature-card reverse">
+
+            <div className="feature-visual phone-feature">
+              <img
+                src={phoneImg}
+                alt="Parent Notifications"
+              />
+            </div>
+
+            <div className="feature-content">
+
+              <span className="feature-number">02</span>
+
+              <h2>
+                <FaBell />
+                Parent Notifications
+              </h2>
+
+              <p>
+                Get instant notifications about every important student
+                and transportation update.
+              </p>
+
+              <div className="notification-grid">
+
+                <div>
+                  <FaUsers />
+                  <span>Student Boarded</span>
+                </div>
+
+                <div>
+                  <FaUsers />
+                  <span>Student Dropped</span>
+                </div>
+
+                <div>
+                  <FaBus />
+                  <span>Bus Arrived</span>
+                </div>
+
+                <div>
+                  <FaBus />
+                  <span>Bus Delayed</span>
+                </div>
+
+                <div>
+                  <FaExclamationTriangle />
+                  <span>Emergency Alert</span>
+                </div>
+
+                <div>
+                  <FaMapMarkerAlt />
+                  <span>Route Changed</span>
+                </div>
+
+              </div>
+
+            </div>
+
+          </article>
+
+
+          {/* 03 */}
+          <article className="feature-card">
+
+            <div className="feature-content">
+
+              <span className="feature-number">03</span>
+
+              <h2>
+                <FaIdCard />
+                Student Attendance
+              </h2>
+
+              <p>
+                Automated attendance management helps schools maintain
+                safety, accuracy and complete transparency.
+              </p>
+
+              <div className="feature-list">
+
+                <span>
+                  <FaCheckCircle /> RFID Attendance
+                </span>
+
+                <span>
+                  <FaCheckCircle /> QR Attendance
+                </span>
+
+                <span>
+                  <FaCheckCircle /> Manual Attendance
+                </span>
+
+                <span>
+                  <FaCheckCircle /> Attendance Reports
+                </span>
+
+              </div>
+
+            </div>
+
+            <div className="feature-visual attendance-visual">
+              <div className="mini-dashboard">
+
+                <div className="mini-header">
+                  Today's Attendance
+                </div>
+
+                <div className="attendance-numbers">
+                  <div>
+                    <strong>320</strong>
+                    <span>Present</span>
+                  </div>
+
+                  <div>
+                    <strong>30</strong>
+                    <span>Absent</span>
+                  </div>
+
+                  <div>
+                    <strong>350</strong>
+                    <span>Total</span>
+                  </div>
+                </div>
+
+                <div className="attendance-row">
+                  <span>Student Boarded</span>
+                  <strong>320</strong>
+                </div>
+
+                <div className="attendance-row">
+                  <span>Student Dropped</span>
+                  <strong>310</strong>
+                </div>
+
+                <div className="attendance-row">
+                  <span>Attendance Rate</span>
+                  <strong>96.2%</strong>
+                </div>
+
               </div>
             </div>
 
-            <div className="stat-box">
-              <FaUsers className="green" />
+          </article>
 
-              <div>
-                <h3>50,000+</h3>
-                <span>Parents</span>
+
+          {/* 04 */}
+          <article className="feature-card reverse">
+
+            <div className="feature-visual driver-visual">
+
+              <div className="driver-card">
+
+                <div className="driver-avatar">
+                  <FaUserTie />
+                </div>
+
+                <div className="driver-details">
+                  <h4>Rajesh Kumar</h4>
+                  <span>Driver ID: DR1234</span>
+                </div>
+
+                <div className="driver-status">
+                  Active
+                </div>
+
+                <div className="driver-score">
+                  <div>
+                    <span>Driving Score</span>
+                    <strong>92/100</strong>
+                  </div>
+
+                  <div className="score-bar">
+                    <span></span>
+                  </div>
+                </div>
+
               </div>
+
             </div>
 
-            <div className="stat-box">
-              <FaBus className="orange" />
+            <div className="feature-content">
 
-              <div>
-                <h3>1,000+</h3>
-                <span>Buses</span>
+              <span className="feature-number">04</span>
+
+              <h2>
+                <FaUserTie />
+                Driver Management
+              </h2>
+
+              <p>
+                Manage driver profiles, documents, performance and
+                assigned routes from one place.
+              </p>
+
+              <div className="feature-list">
+
+                <span>
+                  <FaCheckCircle /> Driver Profile
+                </span>
+
+                <span>
+                  <FaCheckCircle /> License Verification
+                </span>
+
+                <span>
+                  <FaCheckCircle /> Driving Score
+                </span>
+
+                <span>
+                  <FaCheckCircle /> Driver Attendance
+                </span>
+
+                <span>
+                  <FaCheckCircle /> Assigned Bus & Route
+                </span>
+
               </div>
+
             </div>
 
-            <div className="stat-box">
-              <FaShieldAlt className="purple" />
+          </article>
+
+
+          {/* 05 */}
+          <article className="feature-card">
+
+            <div className="feature-content">
+
+              <span className="feature-number">05</span>
+
+              <h2>
+                <FaChartLine />
+                School Dashboard
+              </h2>
+
+              <p>
+                Get a complete overview of your transportation system
+                and make faster data-driven decisions.
+              </p>
+
+              <div className="feature-list">
+
+                <span>
+                  <FaCheckCircle /> Total Buses
+                </span>
+
+                <span>
+                  <FaCheckCircle /> Total Drivers
+                </span>
+
+                <span>
+                  <FaCheckCircle /> Total Students
+                </span>
+
+                <span>
+                  <FaCheckCircle /> Routes
+                </span>
+
+                <span>
+                  <FaCheckCircle /> Live Alerts
+                </span>
+
+              </div>
+
+            </div>
+
+            <div className="feature-visual dashboard-small">
+
+              <div className="dashboard-stat-grid">
+
+                <div>
+                  <strong>25</strong>
+                  <span>Total Buses</span>
+                </div>
+
+                <div>
+                  <strong>12</strong>
+                  <span>Drivers</span>
+                </div>
+
+                <div>
+                  <strong>350</strong>
+                  <span>Students</span>
+                </div>
+
+                <div>
+                  <strong>18</strong>
+                  <span>Routes</span>
+                </div>
+
+              </div>
+
+              <div className="chart-card">
+                <span>Trip Overview</span>
+
+                <div className="fake-chart">
+                  <i></i>
+                  <i></i>
+                  <i></i>
+                  <i></i>
+                  <i></i>
+                  <i></i>
+                </div>
+              </div>
+
+            </div>
+
+          </article>
+
+
+          {/* 06 */}
+          <article className="feature-card reverse">
+
+            <div className="feature-visual bus-health-visual">
+
+              <div className="health-circle">
+                <FaBus />
+              </div>
+
+              <div className="health-item">
+                <span>Speed</span>
+                <strong>42 km/h</strong>
+              </div>
+
+              <div className="health-item">
+                <span>Fuel</span>
+                <strong>75%</strong>
+              </div>
+
+              <div className="health-item">
+                <span>Battery</span>
+                <strong>96%</strong>
+              </div>
+
+              <div className="health-item">
+                <span>GPS</span>
+                <strong>Online</strong>
+              </div>
+
+            </div>
+
+            <div className="feature-content">
+
+              <span className="feature-number">06</span>
+
+              <h2>
+                <FaGasPump />
+                Bus Health Monitoring
+              </h2>
+
+              <p>
+                Monitor your fleet health in real-time for safer,
+                smoother and more reliable operations.
+              </p>
+
+              <div className="feature-list">
+
+                <span>
+                  <FaCheckCircle /> Speed Monitoring
+                </span>
+
+                <span>
+                  <FaCheckCircle /> Fuel Monitoring
+                </span>
+
+                <span>
+                  <FaCheckCircle /> Battery Status
+                </span>
+
+                <span>
+                  <FaCheckCircle /> GPS Status
+                </span>
+
+                <span>
+                  <FaCheckCircle /> Engine Health
+                </span>
+
+                <span>
+                  <FaCheckCircle /> Maintenance Reminder
+                </span>
+
+              </div>
+
+            </div>
+
+          </article>
+
+        </div>
+
+      </section>
+
+
+      {/* =====================================================
+          ADVANCED FEATURES 07 - 10
+      ===================================================== */}
+      <section className="advanced-section">
+
+        <div className="advanced-grid">
+
+          {/* 07 */}
+          <article className="advanced-card sos-card">
+
+            <span className="advanced-number">07</span>
+
+            <div className="advanced-icon red">
+              <FaExclamationTriangle />
+            </div>
+
+            <h2>SOS Emergency</h2>
+
+            <p>
+              One-tap emergency alerts instantly notify parents,
+              school administrators and drivers.
+            </p>
+
+            <div className="sos-button">
+              SOS
+            </div>
+
+            <div className="advanced-list">
+
+              <span>
+                <FaCheckCircle /> Instant Parent Alert
+              </span>
+
+              <span>
+                <FaCheckCircle /> Live Bus Location
+              </span>
+
+              <span>
+                <FaCheckCircle /> School Admin Alert
+              </span>
+
+            </div>
+
+          </article>
+
+
+          {/* 08 */}
+          <article className="advanced-card">
+
+            <span className="advanced-number">08</span>
+
+            <div className="advanced-icon blue">
+              <FaChartLine />
+            </div>
+
+            <h2>Reports & Analytics</h2>
+
+            <p>
+              Detailed reports and analytics help schools improve
+              transportation efficiency.
+            </p>
+
+            <div className="analytics-box">
+
+              <div className="analytics-header">
+                <span>Monthly Overview</span>
+                <strong>+12%</strong>
+              </div>
+
+              <div className="bars">
+                <i></i>
+                <i></i>
+                <i></i>
+                <i></i>
+                <i></i>
+                <i></i>
+                <i></i>
+              </div>
+
+              <div className="analytics-values">
+                <span>
+                  Attendance
+                  <strong>96.2%</strong>
+                </span>
+
+                <span>
+                  On-Time
+                  <strong>94.8%</strong>
+                </span>
+              </div>
+
+            </div>
+
+          </article>
+
+
+          {/* 09 */}
+          <article className="advanced-card">
+
+            <span className="advanced-number">09</span>
+
+            <div className="advanced-icon purple">
+              <FaLock />
+            </div>
+
+            <h2>Data Security</h2>
+
+            <p>
+              Protect school, student and transportation data with
+              secure cloud infrastructure.
+            </p>
+
+            <div className="security-grid">
 
               <div>
-                <h3>99.8%</h3>
-                <span>Uptime</span>
+                <FaShieldAlt />
+                <span>End-to-End Encryption</span>
               </div>
+
+              <div>
+                <FaCloud />
+                <span>Secure Cloud Backup</span>
+              </div>
+
+              <div>
+                <FaLock />
+                <span>Secure Servers</span>
+              </div>
+
+              <div>
+                <FaUserTie />
+                <span>Role-Based Access</span>
+              </div>
+
+            </div>
+
+          </article>
+
+
+          {/* 10 */}
+          <article className="advanced-card integrations-card">
+
+            <span className="advanced-number">10</span>
+
+            <div className="advanced-icon green">
+              <FaCloud />
+            </div>
+
+            <h2>Easy Integrations</h2>
+
+            <p>
+              Seamlessly connect SafeKid GO with the tools and
+              devices your school already uses.
+            </p>
+
+            <div className="integration-grid">
+
+              <div>
+                <FaGoogle />
+                <span>Google Maps</span>
+              </div>
+
+              <div>
+                <FaSatelliteDish />
+                <span>GPS Devices</span>
+              </div>
+
+              <div>
+                <FaSms />
+                <span>SMS Gateway</span>
+              </div>
+
+              <div>
+                <FaUsers />
+                <span>WhatsApp Alerts</span>
+              </div>
+
+              <div>
+                <FaSchool />
+                <span>School ERP</span>
+              </div>
+
+              <div>
+                <FaIdCard />
+                <span>RFID Devices</span>
+              </div>
+
+              <div>
+                <FaCreditCard />
+                <span>Payment Gateway</span>
+              </div>
+
+            </div>
+
+          </article>
+
+        </div>
+
+      </section>
+
+
+      {/* =====================================================
+          WHY SAFE KID GO
+      ===================================================== */}
+      <section className="why-section">
+
+        <div className="why-container">
+
+          <div className="why-visual">
+
+            <div className="why-phone-card">
+
+              <img
+                src={phoneImg}
+                alt="SafeKid GO Mobile App"
+              />
+
+            </div>
+
+          </div>
+
+          <div className="why-content">
+
+            <span className="section-label">
+              WHY SAFEKID GO
+            </span>
+
+            <h2>
+              Why Schools Love
+              <br />
+              <span>SafeKid GO</span>
+            </h2>
+
+            <p>
+              Designed specifically for schools to improve transport
+              safety, reduce manual work and keep parents informed.
+            </p>
+
+            <div className="why-grid">
+
+              <div className="why-item">
+                <FaMapMarkerAlt />
+                <div>
+                  <h3>Real-Time Monitoring</h3>
+                  <p>
+                    Monitor every school bus from one dashboard.
+                  </p>
+                </div>
+              </div>
+
+              <div className="why-item">
+                <FaUsers />
+                <div>
+                  <h3>Better Parent Trust</h3>
+                  <p>
+                    Automatic updates increase transparency.
+                  </p>
+                </div>
+              </div>
+
+              <div className="why-item">
+                <FaChartLine />
+                <div>
+                  <h3>Smart Reports</h3>
+                  <p>
+                    Get useful attendance and transport reports.
+                  </p>
+                </div>
+              </div>
+
+              <div className="why-item">
+                <FaCloud />
+                <div>
+                  <h3>Cloud Platform</h3>
+                  <p>
+                    Access your transportation data anywhere.
+                  </p>
+                </div>
+              </div>
+
             </div>
 
           </div>
 
         </div>
 
-        {/* RIGHT */}
+      </section>
 
-        <div className="hero-right">
 
-          <img
-            src={dashboardImg}
-            alt="Dashboard"
-            className="dashboard-image"
-          />
+      {/* =====================================================
+          CTA
+      ===================================================== */}
+      <section className="features-cta">
 
-          <img
-            src={phoneImg}
-            alt="Mobile"
-            className="phone-image"
-          />
+        <div className="cta-content">
+
+          <div className="cta-illustration">
+            <FaBus />
+          </div>
+
+          <div>
+            <h2>
+              Ready to Make School Transportation Safer?
+            </h2>
+
+            <p>
+              Join schools using SafeKid GO to improve student
+              transportation safety.
+            </p>
+
+            <div className="cta-buttons">
+
+              <Link
+                to="/contact"
+                className="cta-primary"
+              >
+                <FaPhoneAlt />
+                Contact Us
+              </Link>
+
+              <Link
+                to="/login"
+                className="cta-secondary"
+              >
+                Learn More
+                <FaArrowRight />
+              </Link>
+
+            </div>
+
+          </div>
 
         </div>
 
       </section>
 
-      {/* ===== Next Part Here ===== */}
+
+      {/* =====================================================
+          TRUST STRIP
+      ===================================================== */}
+      <section className="trust-strip">
+
+        <div className="trust-item">
+          <FaShieldAlt />
+          <div>
+            <strong>ISO 27001</strong>
+            <span>Security Focused</span>
+          </div>
+        </div>
+
+        <div className="trust-item">
+          <FaPhoneAlt />
+          <div>
+            <strong>24×7 Support</strong>
+            <span>We're here when you need us</span>
+          </div>
+        </div>
+
+        <div className="trust-item">
+          <FaShieldAlt />
+          <div>
+            <strong>99.8% Uptime</strong>
+            <span>Reliable & always available</span>
+          </div>
+        </div>
+
+        <div className="trust-item">
+          <FaSchool />
+          <div>
+            <strong>Trusted by Schools</strong>
+            <span>Built for Indian schools</span>
+          </div>
+        </div>
+
+        <div className="trust-item">
+          <FaCheckCircle />
+          <div>
+            <strong>Made in India</strong>
+            <span>Built for school safety</span>
+          </div>
+        </div>
+
+      </section>
 
     </div>
   );
-}
+};
 
-export default FeaturesPage;      {/* =======================================================
-          FEATURES 01 - 06
-      ======================================================= */}
-
-      <section className="feature-grid">
-
-        {/* ================= 01 ================= */}
-
-        <div className="feature-card">
-
-          <div className="feature-info">
-
-            <span className="feature-number">01</span>
-
-            <h2>Live GPS Tracking</h2>
-
-            <p>
-              Track school buses in real-time with accurate
-              location, ETA and route updates.
-            </p>
-
-            <ul>
-              <li>✔ Live Location</li>
-              <li>✔ Route Tracking</li>
-              <li>✔ ETA & Traffic Updates</li>
-              <li>✔ Geofencing</li>
-              <li>✔ Route Replay</li>
-              <li>✔ History & Playback</li>
-            </ul>
-
-          </div>
-
-          <div className="feature-image">
-
-            <img
-              src={dashboardImg}
-              alt="GPS Tracking"
-            />
-
-          </div>
-
-        </div>
-
-        {/* ================= 02 ================= */}
-
-        <div className="feature-card reverse">
-
-          <div className="feature-image">
-
-            <img
-              src={phoneImg}
-              alt="Notifications"
-            />
-
-          </div>
-
-          <div className="feature-info">
-
-            <span className="feature-number">02</span>
-
-            <h2>Parent Notifications</h2>
-
-            <p>
-              Get instant notifications about every
-              important student update.
-            </p>
-
-            <div className="notification-grid">
-
-              <div>Student Boarded</div>
-
-              <div>Student Dropped</div>
-
-              <div>Bus Arrived</div>
-
-              <div>Bus Delayed</div>
-
-              <div>Emergency Alert</div>
-
-              <div>Route Changed</div>
-
-            </div>
-
-          </div>
-
-        </div>
-
-        {/* ================= 03 ================= */}
-
-        <div className="feature-card">
-
-          <div className="feature-info">
-
-            <span className="feature-number">03</span>
-
-            <h2>Student Attendance</h2>
-
-            <p>
-              Automated attendance system to ensure
-              safety and transparency.
-            </p>
-
-            <ul>
-
-              <li>RFID Attendance</li>
-
-              <li>QR Attendance</li>
-
-              <li>Manual Attendance</li>
-
-            </ul>
-
-          </div>
-
-          <div className="feature-image">
-
-            <img
-              src={dashboardImg}
-              alt=""
-            />
-
-          </div>
-
-        </div>
-
-        {/* ================= 04 ================= */}
-
-        <div className="feature-card reverse">
-
-          <div className="feature-image">
-
-            <img
-              src={dashboardImg}
-              alt=""
-            />
-
-          </div>
-
-          <div className="feature-info">
-
-            <span className="feature-number">04</span>
-
-            <h2>Driver Management</h2>
-
-            <p>
-              Manage driver profiles, documents,
-              performance and routes.
-            </p>
-
-            <ul>
-
-              <li>Driver Profile</li>
-
-              <li>License Verification</li>
-
-              <li>Driving Score</li>
-
-              <li>Assigned Routes</li>
-
-            </ul>
-
-          </div>
-
-        </div>
-
-        {/* ================= 05 ================= */}
-
-        <div className="feature-card">
-
-          <div className="feature-info">
-
-            <span className="feature-number">05</span>
-
-            <h2>School Dashboard</h2>
-
-            <p>
-              Complete overview of your transport
-              management system.
-            </p>
-
-            <ul>
-
-              <li>Total Buses</li>
-
-              <li>Total Drivers</li>
-
-              <li>Total Students</li>
-
-              <li>Live Alerts</li>
-
-            </ul>
-
-          </div>
-
-          <div className="feature-image">
-
-            <img
-              src={dashboardImg}
-              alt=""
-            />
-
-          </div>
-
-        </div>
-
-        {/* ================= 06 ================= */}
-
-        <div className="feature-card reverse">
-
-          <div className="feature-image">
-
-            <img
-              src={phoneImg}
-              alt=""
-            />
-
-          </div>
-
-          <div className="feature-info">
-
-            <span className="feature-number">06</span>
-
-            <h2>Bus Health Monitoring</h2>
-
-            <p>
-              Monitor your fleet health in real-time
-              for safer transportation.
-            </p>
-
-            <ul>
-
-              <li>Fuel Monitoring</li>
-
-              <li>Battery Status</li>
-
-              <li>GPS Status</li>
-
-              <li>Maintenance Reminder</li>
-
-            </ul>
-
-          </div>
-
-        </div>
-
-      </section>     
-       {/* =======================================================
-          ADVANCED FEATURES (07–10)
-      ======================================================= */}
-    <section className="advanced-features">
-        {/* 07 SOS */}
-        <div className="advanced-card">
-
-          <div className="advanced-number">07</div>
-
-          <h2>SOS Emergency Management</h2>
-
-          <p>
-            Instantly notify school administrators and parents during
-            emergencies with one-tap SOS alerts.
-          </p>
-
-          <ul>
-            <li>✓ Emergency Notifications</li>
-            <li>✓ Live Bus Location</li>
-            <li>✓ Instant Parent Alerts</li>
-            <li>✓ Panic Button Support</li>
-          </ul>
-
-        </div>
-
-        {/* 08 Reports */}
-
-        <div className="advanced-card">
-
-          <div className="advanced-number">08</div>
-
-          <h2>Reports & Analytics</h2>
-
-          <p>
-            View complete operational reports with detailed insights
-            for better decision making.
-          </p>
-
-          <img
-            src={dashboardImg}
-            alt="Reports"
-            className="advanced-image"
-          />
-
-        </div>
-
-        {/* 09 Security */}
-
-        <div className="advanced-card">
-
-          <div className="advanced-number">09</div>
-
-          <h2>Data Security</h2>
-
-          <p>
-            Enterprise-grade encryption keeps school, student and
-            transport data completely secure.
-          </p>
-
-          <ul>
-
-            <li>✓ SSL Encryption</li>
-
-            <li>✓ Secure Login</li>
-
-            <li>✓ Cloud Backup</li>
-
-            <li>✓ Role Based Access</li>
-
-          </ul>
-
-        </div>
-
-        {/* 10 Integrations */}
-
-        <div className="advanced-card">
-
-          <div className="advanced-number">10</div>
-
-          <h2>Easy Integrations</h2>
-
-          <p>
-            Integrate seamlessly with GPS devices, RFID systems,
-            SMS gateways and payment platforms.
-          </p>
-
-          <div className="integration-tags">
-
-            <span>GPS</span>
-
-            <span>RFID</span>
-
-            <span>SMS</span>
-
-            <span>Firebase</span>
-
-            <span>Maps</span>
-
-            <span>Cloud</span>
-
-          </div>
-
-        </div>
-
-      </section>
-
-      {/* =======================================================
-          WHY CHOOSE US
-      ======================================================= */}
-
-      <section className="why-section">
-
-        <div className="why-left">
-
-          <img
-            src={phoneImg}
-            alt="SafeKid GO"
-          />
-
-        </div>
-
-        <div className="why-right">
-
-          <span className="section-tag">
-            WHY SAFEKID GO
-          </span>
-
-          <h2>
-            Why Schools Love
-            <br />
-            SafeKid GO
-          </h2>
-
-          <p>
-            Designed specifically for schools to improve transport
-            safety, reduce manual work and keep parents informed.
-          </p>
-
-          <div className="why-grid">
-
-            <div className="why-box">
-
-              <h3>Real-Time Monitoring</h3>
-
-              <p>
-                Monitor every bus from one dashboard.
-              </p>
-
-            </div>
-
-            <div className="why-box">
-
-              <h3>Improved Parent Trust</h3>
-
-              <p>
-                Automatic updates increase transparency.
-              </p>
-
-            </div>
-
-            <div className="why-box">
-
-              <h3>Smart Reports</h3>
-
-              <p>
-                Download attendance and transport reports.
-              </p>
-
-            </div>
-
-            <div className="why-box">
-
-              <h3>Cloud Platform</h3>
-
-              <p>
-                Access your data anywhere anytime.
-              </p>
-
-            </div>
-
-          </div>
-
-        </div>
-
-      </section>
-
-      {/* =======================================================
-          CTA
-      ======================================================= */}
-
-      <section className="features-cta">
-
-        <h2>
-          Ready to Make School
-          Transportation Safer?
-        </h2>
-
-        <p>
-          Join hundreds of schools already using
-          SafeKid GO.
-        </p>
-
-        <div className="cta-buttons">
-
-          <Link
-            to="/contact"
-            className="primary-btn"
-          >
-            Contact Us
-          </Link>
-
-          <Link
-            to="/login"
-            className="secondary-btn"
-          >
-            Get Started
-          </Link>
-
-        </div>
-
-      </section>
-
-      {/* =======================================================
-          FOOTER
-      ======================================================= */}
-
-      <footer className="features-footer">
-
-        <div className="footer-item">
-          🔒 Enterprise Security
-        </div>
-
-        <div className="footer-item">
-          🚌 Trusted by Schools
-        </div>
-
-        <div className="footer-item">
-          📞 24×7 Support
-        </div>
-
-      </footer>
-      
+export default FeaturesPage;
