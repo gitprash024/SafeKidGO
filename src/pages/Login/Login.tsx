@@ -1,350 +1,311 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../lib/firebase";
-import "./Login.css";
+import React, { useEffect, useState } from "react";
+import type { FormEvent } from "react";
+import { useNavigate } from "react-router-dom"; // Use React Router for SPA navigation
+import "./login.css";
+
+// ===============================
+// SAFEKIDGO ASSETS
+// ===============================
+import logo from "../../assets/Icon.png";
+import schoolBg from "../../assets/school-bg.png";
+import schoolBus from "../../assets/Modern Yellow School Bus Render.png";
+import child from "../../assets/Cheerful Schoolboy with Blue Backpack.png";
 
 const Login: React.FC = () => {
+  const navigate = useNavigate();
+  
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [rememberMe, setRememberMe] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
-  const [rememberMe, setRememberMe] = useState(false);
-  const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
-  const navigate = useNavigate();
+  useEffect(() => {
+    const savedEmail = localStorage.getItem("safekidgo_admin_email");
+    if (savedEmail) {
+      setEmail(savedEmail);
+      setRememberMe(true);
+    }
+  }, []);
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const validateEmail = (inputEmail: string) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(inputEmail);
+  };
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setError(null);
+    setError("");
 
-    const trimmedEmail = email.trim();
-
-    if (!trimmedEmail || !password) {
-      setError("Please enter both email and password.");
+    if (!email.trim()) {
+      setError("Please enter your email address.");
+      return;
+    }
+    if (!validateEmail(email)) {
+      setError("Please enter a valid email address.");
+      return;
+    }
+    if (!password.trim()) {
+      setError("Please enter your password.");
       return;
     }
 
-    setLoading(true);
-
     try {
-      await signInWithEmailAndPassword(auth, trimmedEmail, password);
+      setLoading(true);
 
-      // Login successful
-      navigate("/dashboard");
-    } catch (err: unknown) {
-      const firebaseError = err as { code?: string };
-      setError(friendlyError(firebaseError.code));
+      // Example Backend API integration ready
+      /*
+      const response = await fetch("http://localhost:8080/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.message || "Login failed");
+      localStorage.setItem("token", data.token);
+      */
+
+      if (rememberMe) {
+        localStorage.setItem("safekidgo_admin_email", email.trim());
+      } else {
+        localStorage.removeItem("safekidgo_admin_email");
+      }
+
+      await new Promise((resolve) => setTimeout(resolve, 900));
+      navigate("/admin/dashboard"); // Replaced full reload with SPA transition
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Unable to login. Please try again.");
     } finally {
       setLoading(false);
     }
   };
 
-  const handleForgotPassword = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault();
-
-    // Change this route if your forgot-password page uses another path.
-    navigate("/forgot-password");
-  };
-
-  const handleRegister = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault();
-
-    navigate("/register");
-  };
-
   return (
-    <div className="login-page">
-      <div className="login-container">
+    <div className="sk-login-page">
+      {/* ================================ LEFT BRAND PANEL ================================= */}
+      <section className="sk-brand-panel">
+        <div className="sk-brand-glow sk-glow-one"></div>
+        <div className="sk-brand-glow sk-glow-two"></div>
 
-        {/* =========================
-            LEFT SECTION
-        ========================= */}
-
-        <section className="login-left">
-          <div className="brand">
-            <div className="brand-icon">🛡️</div>
-            <span>SafeKidGo</span>
+        <div className="sk-brand-logo">
+          <img src={logo} alt="SafeKidGo Logo" />
+          <div className="sk-brand-name-wrapper">
+            <div className="sk-brand-name">SafeKid<span>Go</span></div>
+            <div className="sk-brand-tagline">Track. Protect. Trust.</div>
           </div>
+        </div>
 
-          <div className="left-content">
-            <h1>
-              Safety starts with
-              <span> staying connected.</span>
-            </h1>
+        <div className="sk-brand-content">
+          <div className="sk-eyebrow">SAFEKIDGO ADMIN PORTAL</div>
+          <h1>Safety starts with <span>staying connected.</span></h1>
+          <p className="sk-brand-description">
+            Manage, monitor and ensure every child's safe journey with real-time tracking, alerts and secure communication.
+          </p>
 
-            <p>
-              Keep your children safe and stay connected with real-time
-              school bus tracking, alerts and secure communication.
-            </p>
-
-            <div className="safety-features">
-
-              <div className="feature-item">
-                <div className="feature-icon">📍</div>
-
-                <div>
-                  <h3>Live Tracking</h3>
-                  <p>
-                    Know where your child's bus is in real time.
-                  </p>
-                </div>
+          <div className="sk-feature-list">
+            <div className="sk-feature">
+              <span className="sk-feature-icon" role="img" aria-label="Pin">📍</span>
+              <div className="sk-feature-content">
+                <strong>Live Tracking</strong>
+                <span>Know where every bus is in real time.</span>
               </div>
-
-              <div className="feature-item">
-                <div className="feature-icon">🔔</div>
-
-                <div>
-                  <h3>Instant Alerts</h3>
-                  <p>
-                    Get important notifications instantly.
-                  </p>
-                </div>
+            </div>
+            <div className="sk-feature">
+              <span className="sk-feature-icon" role="img" aria-label="Bell">🔔</span>
+              <div className="sk-feature-content">
+                <strong>Instant Alerts</strong>
+                <span>Get important notifications instantly.</span>
               </div>
-
-              <div className="feature-item">
-                <div className="feature-icon">🔒</div>
-
-                <div>
-                  <h3>Secure & Private</h3>
-                  <p>
-                    Your child's information stays protected.
-                  </p>
-                </div>
+            </div>
+            <div className="sk-feature">
+              <span className="sk-feature-icon" role="img" aria-label="Shield">🛡️</span>
+              <div className="sk-feature-content">
+                <strong>Secure &amp; Private</strong>
+                <span>Your school's data stays protected.</span>
               </div>
-
+            </div>
+            <div className="sk-feature">
+              <span className="sk-feature-icon" role="img" aria-label="People">👥</span>
+              <div className="sk-feature-content">
+                <strong>Easy Management</strong>
+                <span>Manage schools, drivers and routes in one place.</span>
+              </div>
             </div>
           </div>
-        </section>
+        </div>
 
-        {/* =========================
-            RIGHT SECTION
-        ========================= */}
-
-        <section className="login-right">
-          <div className="login-card">
-
-            {/* Mobile Brand */}
-
-            <div className="mobile-brand">
-              <div className="brand-icon">🛡️</div>
-              <span>SafeKidGo</span>
-            </div>
-
-            {/* Header */}
-
-            <div className="login-header">
-              <h2>Welcome Back!</h2>
-
-              <p>
-                Login to your SafeKidGo account
-              </p>
-            </div>
-
-            {/* Error */}
-
-            {error && (
-              <div
-                className="login-error"
-                role="alert"
-                aria-live="polite"
-              >
-                {error}
-              </div>
-            )}
-
-            {/* Login Form */}
-
-            <form onSubmit={handleSubmit} noValidate>
-
-              {/* Email */}
-
-              <div className="form-group">
-                <label htmlFor="email">
-                  Email Address
-                </label>
-
-                <div className="input-wrapper">
-                  <span
-                    className="input-icon"
-                    aria-hidden="true"
-                  >
-                    ✉️
-                  </span>
-
-                  <input
-                    id="email"
-                    name="email"
-                    type="email"
-                    placeholder="Enter your email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    autoComplete="email"
-                    disabled={loading}
-                  />
-                </div>
-              </div>
-
-              {/* Password */}
-
-              <div className="form-group">
-                <div className="password-label">
-                  <label htmlFor="password">
-                    Password
-                  </label>
-
-                  <a
-                    href="/forgot-password"
-                    onClick={handleForgotPassword}
-                  >
-                    Forgot Password?
-                  </a>
-                </div>
-
-                <div className="input-wrapper">
-                  <span
-                    className="input-icon"
-                    aria-hidden="true"
-                  >
-                    🔒
-                  </span>
-
-                  <input
-                    id="password"
-                    name="password"
-                    type={showPassword ? "text" : "password"}
-                    placeholder="Enter your password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    autoComplete="current-password"
-                    disabled={loading}
-                  />
-
-                  <button
-                    type="button"
-                    className="show-password"
-                    onClick={() =>
-                      setShowPassword((previous) => !previous)
-                    }
-                    aria-label={
-                      showPassword
-                        ? "Hide password"
-                        : "Show password"
-                    }
-                    disabled={loading}
-                  >
-                    {showPassword ? "🙈" : "👁️"}
-                  </button>
-                </div>
-              </div>
-
-              {/* Remember Me */}
-
-              <div className="login-options">
-                <label className="remember">
-                  <input
-                    type="checkbox"
-                    checked={rememberMe}
-                    onChange={(e) =>
-                      setRememberMe(e.target.checked)
-                    }
-                    disabled={loading}
-                  />
-
-                  <span>Remember me</span>
-                </label>
-              </div>
-
-              {/* Login Button */}
-
-              <button
-                type="submit"
-                className="login-button"
-                disabled={loading}
-              >
-                {loading ? (
-                  <>
-                    <span className="spinner"></span>
-                    Logging in...
-                  </>
-                ) : (
-                  <>
-                    Login
-                    <span>→</span>
-                  </>
-                )}
-              </button>
-
-            </form>
-
-            {/* Divider */}
-
-            <div className="divider">
-              <span>OR</span>
-            </div>
-
-            {/* Register */}
-
-            <div className="signup-text">
-              Don't have an account?
-
-              <a
-                href="/register"
-                onClick={handleRegister}
-              >
-                {" "}
-                Create Account
-              </a>
-            </div>
-
-            {/* Footer */}
-
-            <div className="login-footer">
-              <span>🛡️</span>
-              Safe & Secure • SafeKidGo
-            </div>
-
+        <div className="sk-visual-area">
+          <img src={schoolBg} alt="" className="sk-school-bg" />
+          <div className="sk-visual-overlay"></div>
+          <div className="sk-route">
+            <span className="sk-route-dot sk-dot-one"></span>
+            <span className="sk-route-dot sk-dot-two"></span>
+            <span className="sk-route-line"></span>
           </div>
-        </section>
+          <img src={schoolBus} alt="School Bus" className="sk-school-bus" />
+          <div className="sk-shield-glow"></div>
+          <div className="sk-hero-shield">
+            <img src={logo} alt="SafeKidGo Shield" />
+          </div>
+          <img src={child} alt="SafeKidGo Child" className="sk-child" />
+        </div>
 
-      </div>
+        <div className="sk-stats">
+          <div className="sk-stat"><strong>500+</strong><span>Schools</span></div>
+          <div className="sk-stat-divider"></div>
+          <div className="sk-stat"><strong>50,000+</strong><span>Parents</span></div>
+          <div className="sk-stat-divider"></div>
+          <div className="sk-stat"><strong>1,000+</strong><span>Buses</span></div>
+          <div className="sk-stat-divider"></div>
+          <div className="sk-stat"><strong>99.8%</strong><span>Uptime</span></div>
+        </div>
+      </section>
+
+      {/* ================================ RIGHT LOGIN PANEL ================================= */}
+      <section className="sk-login-panel">
+        <div className="sk-login-card">
+          <div className="sk-login-logo">
+            <img src={logo} alt="SafeKidGo" />
+            <div>
+              <div className="sk-login-brand">SafeKid<span>Go</span></div>
+              <small>Track. Protect. Trust.</small>
+            </div>
+          </div>
+
+          <div className="sk-login-header">
+            <div className="sk-admin-badge">ADMIN PORTAL</div>
+            <h2>Welcome Back!</h2>
+            <p>Login to your SafeKidGo Admin account</p>
+          </div>
+
+          {/* ERROR DISPLAY */}
+          {error && (
+            <div className="sk-error" role="alert">
+              <span>!</span> {error}
+            </div>
+          )}
+
+          {/* FORM START */}
+          <form className="sk-login-form" onSubmit={handleSubmit}>
+            <div className="sk-form-group">
+              <label htmlFor="email">Email Address</label>
+              <div className="sk-input-wrapper">
+                <span className="sk-input-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                    <rect x="3" y="5" width="18" height="14" rx="2" />
+                    <path d="m3 7 9 6 9-6" />
+                  </svg>
+                </span>
+                <input
+                  id="email"
+                  type="email"
+                  placeholder="Enter your email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  autoComplete="email"
+                />
+              </div>
+            </div>
+
+            {/* PASSWORD */}
+            <div className="sk-form-group">
+              <div className="sk-password-label">
+                <label htmlFor="password">Password</label>
+                <button
+                  type="button"
+                  className="sk-forgot"
+                  onClick={() => alert("Password reset functionality will be connected to your backend.")}
+                >
+                  Forgot Password?
+                </button>
+              </div>
+              <div className="sk-input-wrapper">
+                <span className="sk-input-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                    <rect x="5" y="10" width="14" height="10" rx="2" />
+                    <path d="M8 10V7a4 4 0 0 1 8 0v3" />
+                  </svg>
+                </span>
+                <input
+                  id="password"
+                  type={showPassword ? "text" : "password"}
+                  placeholder="Enter your password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  autoComplete="current-password"
+                />
+                <button
+                  type="button"
+                  className="sk-password-toggle"
+                  onClick={() => setShowPassword((prev) => !prev)}
+                  aria-label={showPassword ? "Hide password" : "Show password"}
+                >
+                  {showPassword ? "👁️" : "🙈"}
+                </button>
+              </div>
+            </div>
+
+            {/* REMEMBER ME & SECURE LOGIN ROW */}
+            <div className="sk-remember-row">
+              <label className="sk-checkbox">
+                <input
+                  type="checkbox"
+                  checked={rememberMe}
+                  onChange={(e) => setRememberMe(e.target.checked)}
+                />
+                <span className="sk-checkmark"></span>
+                <span>Remember me</span>
+              </label>
+              <span className="sk-secure-text">🔒 Secure Login</span>
+            </div>
+
+            {/* SIGN IN BUTTON */}
+            <button
+              type="submit"
+              className={`sk-login-button ${loading ? "loading" : ""}`}
+              disabled={loading}
+            >
+              {loading ? (
+                <>
+                  <span className="sk-spinner"></span> Signing in...
+                </>
+              ) : (
+                <>
+                  <span>Login</span> <span className="sk-arrow">→</span>
+                </>
+              )}
+            </button>
+          </form>
+
+          <div className="sk-divider">
+            <span></span><small>OR</small><span></span>
+          </div>
+
+          <div className="sk-create-account">
+            <span>Don't have an account?</span>
+            <button type="button" onClick={() => navigate("/admin/register")}>
+              Create Account
+            </button>
+          </div>
+
+          <div className="sk-security">
+            <div className="sk-security-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M12 3 20 6v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6l8-3Z" />
+                <path d="m9 12 2 2 4-4" />
+              </svg>
+            </div>
+            <div className="sk-security-text">
+              <strong>Safe &amp; Secure</strong>
+              <span>SafeKidGo Admin Portal</span>
+            </div>
+          </div>
+        </div>
+        <div className="sk-login-copyright">© 2026 SafeKidGo. All Rights Reserved.</div>
+      </section>
     </div>
   );
 };
-
-/* =========================
-   FIREBASE ERROR HANDLER
-========================= */
-
-function friendlyError(code?: string): string {
-  switch (code) {
-    case "auth/invalid-credential":
-      return "Email or password is incorrect.";
-
-    case "auth/wrong-password":
-      return "Email or password is incorrect.";
-
-    case "auth/user-not-found":
-      return "No account exists with this email.";
-
-    case "auth/invalid-email":
-      return "Please enter a valid email address.";
-
-    case "auth/user-disabled":
-      return "This account has been disabled.";
-
-    case "auth/too-many-requests":
-      return "Too many login attempts. Please try again later.";
-
-    case "auth/network-request-failed":
-      return "Please check your internet connection and try again.";
-
-    case "auth/operation-not-allowed":
-      return "Email/password login is not enabled in Firebase.";
-
-    default:
-      return "Something went wrong. Please try again.";
-  }
-}
 
 export default Login;
